@@ -1,13 +1,11 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        unordered_set<int> seen;
-        seen.reserve(nums.size()); // avoids rehashing
-        seen.max_load_factor(0.7); // faster lookups
-        
-        for(int n : nums){
-            if(seen.count(n)) return true;
-            seen.insert(n);
+        sort(nums.begin(), nums.end());
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i]==nums[i-1])
+                return true;
         }
         return false;
     }
