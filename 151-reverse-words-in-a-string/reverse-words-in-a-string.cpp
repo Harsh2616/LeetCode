@@ -1,28 +1,32 @@
 class Solution {
 public:
-    string reverseWords(string s) {
-        reverse(s.begin(), s.end());  // Step 1
+    void cleanSpaces(string &s) {
+        int i = 0, j = 0, n = s.size();
         
-        int n = s.size();
-        string result;
-        int i = 0;
-
-        while (i < n) {
-            while (i < n && s[i] == ' ') i++; // skip spaces
+        while (j < n) {
+            while (j < n && s[j] == ' ') j++; // skip spaces
             
-            if (i >= n) break;
+            while (j < n && s[j] != ' ')
+                s[i++] = s[j++]; // copy word
             
-            int j = i;
-            while (j < n && s[j] != ' ') j++; // find word
+            while (j < n && s[j] == ' ') j++; // skip spaces
             
-            reverse(s.begin() + i, s.begin() + j); // reverse word
-            
-            if (!result.empty()) result += " ";
-            result.append(s.substr(i, j - i));
-            
-            i = j;
+            if (j < n) s[i++] = ' '; // add single space
         }
-        return result;
+        s.resize(i);
+    }
+    
+    string reverseWords(string s) {
+        cleanSpaces(s);
+        reverse(s.begin(), s.end());
         
+        int start = 0;
+        for (int end = 0; end <= s.size(); end++) {
+            if (end == s.size() || s[end] == ' ') {
+                reverse(s.begin() + start, s.begin() + end);
+                start = end + 1;
+            }
+        }
+        return s;
     }
 };
