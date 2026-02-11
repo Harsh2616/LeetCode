@@ -3,9 +3,7 @@ private:
     stack<pair<int,int>> st;
 
 public:
-    MinStack() {
-        
-    }
+    MinStack() {}
     
     void push(int val) {
         if(st.empty())
